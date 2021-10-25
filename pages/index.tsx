@@ -21,7 +21,7 @@ const index = ({new_releases,featured_playlists,focus_playlists}:IndexProps) => 
   const {user} = useUser()
   const router = useRouter()
     useEffect(()=>{
-        if(user == null || user.token === null){
+        if(user === null || user.token === null){
           router.push('/login')
         }
         const handleScroll = () => {

@@ -17,8 +17,17 @@ const AlbumCard = ({album,playlist}:AlbumCardProps) => {
   if(album){
     subtitle = getCleanString(album.artists.map(artist => artist.name).join().toString())
   }
+  const handleDetailsRoute = () => {
+    router.push({
+      pathname:'/details',
+      query:{
+        album:album ? JSON.stringify(album) : null,
+        playlist:playlist ? JSON.stringify(playlist):null 
+      }
+    })
+  }
   return (
-    <div onClick={() => router.push('/details')}>
+    <div onClick={handleDetailsRoute}>
         <div className="group w-48 h-64 bg-black bg-opacity-20 p-5 rounded-sm cursor-pointer hover:bg-white hover:bg-opacity-5 transition duration-300">
           <div className="relative w-full h-36 rounded-sm overflow-hidden hover:overflow-visible">
             <Image

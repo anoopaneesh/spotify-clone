@@ -11,7 +11,6 @@ const login = () => {
     useEffect(()=>{
         const params = new URLSearchParams(window.location.search) // id=123
         let code = params.get('code')
-        console.log('code',code)
         if(code){
             requestToken(code).then(()=>{
                 router.push('/')

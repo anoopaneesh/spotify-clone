@@ -20,7 +20,6 @@ const UserProvider = ({children}:any) => {
             return new Promise<void>(async(resolve) => {
                 setLoading(true)
                 await fetch(`/api/getToken?code=${code}`).then(res => res.json()).then(data => {
-                console.log(data)
                     if(data.token){
                         setToken(data.token as Token)
                         resolve()

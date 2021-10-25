@@ -7,6 +7,7 @@ interface TrackContextProps{
     togglePlaying:() => void
     playTrack:()=>void
     playing:boolean
+    currentTime:number
     stopTrack:()=>void
 }
 
@@ -16,8 +17,8 @@ const TrackProvider = ({children}:any) => {
     const [track,setTrack] = useState<Track | null>(null)
     const [playing,setPlaying] = useState(false)
     const [audio,setAudio] = useState<HTMLAudioElement | null>(null)
+    const [currentTime,setCurrentTime] = useState(0)
     const addTrack = (tr:Track) => {
-        console.log('I am added new Track')
         stopTrack()
         setTrack(tr)
     }
@@ -25,14 +26,12 @@ const TrackProvider = ({children}:any) => {
         setPlaying(pl => !pl)
     }
     const playTrack = () => {
-        console.log('I am playing new track')
         if(audio){
             setPlaying(true)
             audio.play()
         }
     }
     const stopTrack = () => {
-        console.log('I stopped previous track')
         if(audio && playing){
             setPlaying(false)
             audio.pause()
@@ -40,10 +39,19 @@ const TrackProvider = ({children}:any) => {
     }
     useEffect(()=>{
         if(track && track.preview_url){
-            setAudio(new Audio(track.preview_url))
+            const a = new Audio(track.preview_url)
+            setCurrentTime(0)
+            a.ontimeupdate = (e) => {
+                setCurrentTime(a.currentTime)
+            }
+            a.onended = () => {
+                setPlaying(false)
+                setCurrentTime(0)
+            }
+            setAudio(a)
         }
     },[track])
-    return <TrackContext.Provider value={{addTrack,togglePlaying,track,playTrack,stopTrack,playing}}>
+    return <TrackContext.Provider value={{addTrack,togglePlaying,track,playTrack,stopTrack,playing,currentTime}}>
         {children}
     </TrackContext.Provider>
 }

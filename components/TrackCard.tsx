@@ -27,13 +27,13 @@ const TrackCard = ({track,index,onClick}:TrackCardProps) => {
                             <Image src={track.album.images[0].url} layout="fill" />
                         </div>
                         <div className="flex flex-col">
-                        <p className="text-white font-bold">{track.name}</p>
+                        <p className="text-white font-bold truncate">{track.name}</p>
                         <p>{getArtists(track)}</p>
                         </div>
                     </div>
                 </div>
                 <div className="flex-1 hidden md:inline-flex"><p>{track.album.name}</p></div>
-                <div className="w-96 hidden lg:inline-flex"><p>{formatDistanceToNow(new Date(track.added_at),{addSuffix:true})}</p></div>
+                <div className="w-96 hidden lg:inline-flex"><p>{track.added_at ? formatDistanceToNow(new Date(track.added_at),{addSuffix:true}) : ''}</p></div>
                 <div className="w-24 text-right pr-8"><p>{formattedTime(track.duration_ms)}</p></div>
           </div>
     )

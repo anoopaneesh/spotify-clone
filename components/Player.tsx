@@ -15,7 +15,8 @@ const Player = () => {
     const handleChange = (e:any) => {
         console.log(e)
     }
-    const {track,playTrack,stopTrack,playing} = useTrack()
+    const {track,playTrack,stopTrack,playing,currentTime} = useTrack()
+    const progress = (currentTime/30.040816)*100
     const handlePlay = () => {
         if(playing){
             stopTrack()
@@ -30,7 +31,7 @@ const Player = () => {
         return myString.replace( /(<([^>]+)>)/ig, '').replace(/&amp;/g, "&")
       }
     return (
-        <div className="fixed bottom-0 z-20 text-white h-24 w-full bg-[#181818] border-t border-gray-700 grid grid-cols-2 md:grid-cols-3 px-8">
+        <div className="fixed bottom-0 z-20 text-white h-24 w-full bg-[#181818] border-t border-gray-700 grid grid-cols-1 md:grid-cols-3 px-8">
             {/* Left */}
             <div className="md:flex hidden items-center space-x-4">
                 <div className="relative w-20 h-20">
@@ -53,11 +54,11 @@ const Player = () => {
                 <NextIcon color="gray" height="20px" width="20px"/>
                 </div>
                 <div className="w-full bg-white bg-opacity-10 overflow-hidden rounded-full h-1">
-                    <div className="w-1/2 h-full bg-white"></div>
+                    <div className="h-full bg-white" style={{width:`${progress}%`}}></div>
                 </div>
             </div>
             {/* Right */}
-            <div className="flex justify-end items-center">
+            <div className="hidden md:flex justify-end items-center">
                 <div className="w-32">
                 <Slider aria-label="slider-ex-2" colorScheme="green" defaultValue={30} onChangeEnd={handleChange}>
                 <SliderTrack>
