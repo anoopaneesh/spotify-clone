@@ -1,6 +1,7 @@
-import { PlayIcon } from "@heroicons/react/solid"
+import { PauseIcon, PlayIcon } from "@heroicons/react/solid"
 import Image from 'next/image'
 import NextIcon from "./icons/NextIcon"
+import noTrack from '../images/no-track.png'
 import PrevIcon from "./icons/PrevIcon"
 import {
     Slider,
@@ -8,29 +9,47 @@ import {
     SliderFilledTrack,
     SliderThumb,
   } from "@chakra-ui/react"
+import { useTrack } from "../context/TrackContext"
+import Track from "../types/Track"
 const Player = () => {
     const handleChange = (e:any) => {
         console.log(e)
     }
+    const {track,playTrack,stopTrack,playing} = useTrack()
+    const handlePlay = () => {
+        if(playing){
+            stopTrack()
+        }else{
+            playTrack()
+        }
+    }
+    function getArtists(track:Track){
+        return getCleanString(track.album.artists.map(artist => artist.name).join().toString())
+    }
+    const getCleanString = (myString:string) => {
+        return myString.replace( /(<([^>]+)>)/ig, '').replace(/&amp;/g, "&")
+      }
     return (
         <div className="fixed bottom-0 z-20 text-white h-24 w-full bg-[#181818] border-t border-gray-700 grid grid-cols-2 md:grid-cols-3 px-8">
             {/* Left */}
             <div className="md:flex hidden items-center space-x-4">
                 <div className="relative w-20 h-20">
                 <Image
-              src="https://i.scdn.co/image/ab67616d00001e02a75c2f26913099a420050f01"
+              src={track ? track.album.images[0].url : noTrack}
               layout="fill"
             />
                 </div>
                 <div className="flex flex-col justify-center">
-                    <p className="text-sm text-white">Raataan Lambiyan (From "Shershaah")</p>
-                    <p className="text-xs text-gray-500">Tanishk Bagchi,Jubin Nautiyal,Asees Kaur</p>
+                    <p className="text-sm text-white">{track?.name || ''}</p>
+                    <p className="text-xs text-gray-500">{track ? getArtists(track) : ''}</p>
                 </div>
             </div>
             {/* Middle */}
             <div className="flex-1 flex flex-col space-y-2 items-center justify-center">
                 <div className="flex space-x-2 items-center"><PrevIcon color="gray" height="20px" width="20px"/>
-                <PlayIcon className="h-11 w-11 hover:scale-105 cursor-pointer" />
+                {playing ?<PauseIcon onClick={handlePlay} className="h-11 w-11 hover:scale-105 cursor-pointer" /> :<PlayIcon onClick={handlePlay} className="h-11 w-11 hover:scale-105 cursor-pointer" />}
+                
+                
                 <NextIcon color="gray" height="20px" width="20px"/>
                 </div>
                 <div className="w-full bg-white bg-opacity-10 overflow-hidden rounded-full h-1">
@@ -51,5 +70,4 @@ const Player = () => {
         </div>
     )
 }
-
 export default Player

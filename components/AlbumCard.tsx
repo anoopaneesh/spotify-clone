@@ -1,4 +1,6 @@
 import Image from 'next/image'
+import {useRouter} from 'next/router';
+import { useTrack } from '../context/TrackContext';
 import playSmall from '../images/playSmall.svg'
 import { Album } from '../types/Album';
 import { Playlist } from '../types/Playlist';
@@ -10,12 +12,13 @@ const getCleanString = (myString:string) => {
   return myString.replace( /(<([^>]+)>)/ig, '').replace(/&amp;/g, "&")
 }
 const AlbumCard = ({album,playlist}:AlbumCardProps) => {
+  const router = useRouter()
   let subtitle : string | null =null
   if(album){
     subtitle = getCleanString(album.artists.map(artist => artist.name).join().toString())
   }
   return (
-    <div>
+    <div onClick={() => router.push('/details')}>
         <div className="group w-48 h-64 bg-black bg-opacity-20 p-5 rounded-sm cursor-pointer hover:bg-white hover:bg-opacity-5 transition duration-300">
           <div className="relative w-full h-36 rounded-sm overflow-hidden hover:overflow-visible">
             <Image

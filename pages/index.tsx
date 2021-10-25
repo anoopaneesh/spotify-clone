@@ -4,22 +4,26 @@ import AlbumContainer from "../components/AlbumContainer"
 import Header from "../components/Header"
 import Player from "../components/Player"
 import Sidebar from "../components/Sidebar"
-import dummyData from '../data/demo'
 import newReleases from "../data/new-releases"
 import featuredPlaylists from "../data/featured-playlists"
 import focusPlaylists from "../data/focus-playlists"
 import { Album } from "../types/Album"
-import { Collection } from "../types/DemoType"
 import { Playlist } from "../types/Playlist"
+import { useUser } from "../context/UserProvider"
+import { useRouter } from "next/router"
 interface IndexProps{
-  demo:Collection[]
   new_releases:Album[]
   featured_playlists:Playlist[],
   focus_playlists:Playlist[]
 }
-const index = ({demo,new_releases,featured_playlists,focus_playlists}:IndexProps) => {
+const index = ({new_releases,featured_playlists,focus_playlists}:IndexProps) => {
   const [navbarState,setNavbarState] = useState(false)
+  const {user} = useUser()
+  const router = useRouter()
     useEffect(()=>{
+        if(user == null || user.token === null){
+          router.push('/login')
+        }
         const handleScroll = () => {
             if(window.scrollY > 2){
               setNavbarState(true)
@@ -85,7 +89,6 @@ export const getServerSideProps : GetServerSideProps = async (context) => {
   })
   return {
     props:{ 
-      demo:dummyData,
       new_releases,
       featured_playlists,
       focus_playlists

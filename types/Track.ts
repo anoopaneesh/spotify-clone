@@ -7,4 +7,5 @@ export default interface Track{
     name:string
     popularity?:number
     album:Album
+    preview_url:string|null
 }
