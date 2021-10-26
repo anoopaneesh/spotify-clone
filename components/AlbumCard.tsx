@@ -30,9 +30,10 @@ const AlbumCard = ({album,playlist}:AlbumCardProps) => {
     <div onClick={handleDetailsRoute}>
         <div className="group w-48 h-64 bg-black bg-opacity-20 p-5 rounded-sm cursor-pointer hover:bg-white hover:bg-opacity-5 transition duration-300">
           <div className="relative w-full h-36 rounded-sm overflow-hidden hover:overflow-visible">
-            <Image
-              src={album?.images[0].url || playlist?.images[0].url || ""}
-              layout="fill"
+            <img
+              src={album?.images[0]?.url || playlist?.images[0]?.url || ""}
+              width="100%"
+              height="100%"
             />
             <div className="translate-y-11 group-hover:translate-y-0 w-10 h-10 grid transition duration-300 ease-out hover:scale-110  absolute right-0 bottom-1 rounded-full place-items-center">
               <Image

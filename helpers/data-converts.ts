@@ -32,3 +32,28 @@ export const playlistToTracks = (playlist:Playlist,arr:any) => {
     })
     return tracks
 }
+
+export const toAlbums = (arr:any) => {
+    let albums:Album[] = arr.items.map((item:any)=> {
+        return {
+          album_type:item.album_type,
+          id:item.id,
+          name:item.name,
+          images:item.images,
+          artists:item.artists
+        }
+      })
+      return albums
+}
+
+export const toPlaylists = (arr:any) => {
+    let playlists:Playlist[] = arr.items.map((item:any) => {
+        return {
+          id:item.id,
+          name:item.name,
+          images:item.images,
+          description:item.description
+        }
+      })
+      return playlists
+}

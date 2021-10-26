@@ -13,10 +13,10 @@ const Sidebar = () => {
             <HomeIcon className="h-6 w-6" />
             <p className="font-bold">Home</p>
           </div>
-          <div className="text-gray-400 bg-black flex text-sm space-x-3 rounded-sm p-2 items-center cursor-pointer hover:text-white">
+          <a href="/search" className="text-gray-400 bg-black flex text-sm space-x-3 rounded-sm p-2 items-center cursor-pointer hover:text-white">
             <SearchIcon className="w-6 h-6" />
             <p className="font-bold">Search</p>
-          </div>
+          </a>
           <div className="text-gray-400 bg-black text-sm flex space-x-3 rounded-sm p-2 items-center cursor-pointer hover:text-white">
             <CollectionIcon className="h-6 w-6" />
             <p className="font-bold">Library</p>

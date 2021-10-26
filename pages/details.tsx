@@ -57,7 +57,7 @@ const details = ({album,playlist}:DetailsProps) => {
           <Sidebar />
         </section>
         {/* right side */}
-        <section className="md:ml-60 bg-black bg-opacity-90 flex-grow text-white py-24 md:px-8">
+        <section className="md:ml-60 bg-black bg-opacity-90 flex-grow text-white py-24 md:px-8 min-h-screen">
           <div className="flex flex-col sm:flex-row sm:items-end space-x-5">
               <div className="relative w-48 h-48 mx-5 sm:mx-0">
                   <Image src={album?.images[0].url || playlist?.images[0].url || ''} layout="fill" />

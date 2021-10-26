@@ -36,7 +36,7 @@ const Player = () => {
             <div className="md:flex hidden items-center space-x-4">
                 <div className="relative w-20 h-20">
                 <Image
-              src={track ? track.album.images[0].url : noTrack}
+              src={track ? track.album.images[0]?.url: noTrack}
               layout="fill"
             />
                 </div>

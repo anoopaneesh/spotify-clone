@@ -11,6 +11,7 @@ import { Album } from "../types/Album"
 import { Playlist } from "../types/Playlist"
 import { useUser } from "../context/UserProvider"
 import { useRouter } from "next/router"
+import { getSearchResults } from "../helpers/spotify-api"
 interface IndexProps{
   new_releases:Album[]
   featured_playlists:Playlist[],
@@ -20,6 +21,25 @@ const index = ({new_releases,featured_playlists,focus_playlists}:IndexProps) => 
   const [navbarState,setNavbarState] = useState(false)
   const {user} = useUser()
   const router = useRouter()
+  const [searchTerm,setSearchTerm] = useState("")
+  const [albums,setAlbums] = useState<Album[]>([])
+  const [playlists,setPlaylists] = useState<Playlist[]>([])
+  console.log({albums,playlists})
+  let cancel = false
+  useEffect(()=>{
+      if(searchTerm && searchTerm.length && user && user.token){
+          cancel = false
+          getSearchResults(searchTerm,user.token.access_token).then((data)=>{
+              if(!cancel){
+                  setAlbums(data.albums)
+                  setPlaylists(data.playlists)
+              }     
+          })
+      }
+      return () => {
+          cancel = true
+      }
+  },[searchTerm])
     useEffect(()=>{
         if(user === null || user.token === null){
           router.push('/login')
@@ -42,11 +62,13 @@ const index = ({new_releases,featured_playlists,focus_playlists}:IndexProps) => 
           <Sidebar />
         </section>
         {/* right side */}
-        <section className="md:ml-60 bg-black bg-opacity-90 flex-grow text-white pb-24">
-          <Header navbarState={navbarState} />
+        <section className="md:ml-60 bg-black bg-opacity-90 flex-grow text-white pb-24 min-h-screen">
+        <Header navbarState={false} searchTerm={searchTerm} setSearchTerm={setSearchTerm}/>
           <div className="space-y-10">
+          {albums.length ? <AlbumContainer label="Albums" albums={albums}/>:<></>}
+          {playlists.length ? <AlbumContainer label="Playlists" playlists={playlists}/>:<></>}
           <AlbumContainer label="New Releases" albums={new_releases}/>
-          <AlbumContainer label="Editors Picks" playlists={featured_playlists}/>
+          
           <AlbumContainer label="Focus" playlists={focus_playlists}/>
           {/* {demo.map(cl => (<AlbumContainer key={cl.label} label={cl.label} albums={cl.albums} />))} */}
           </div>
