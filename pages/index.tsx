@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next"
 import { useEffect, useState } from "react"
 import AlbumContainer from "../components/AlbumContainer"
 import Header from "../components/Header"
+import Head from 'next/head'
 import Player from "../components/Player"
 import Sidebar from "../components/Sidebar"
 import newReleases from "../data/new-releases"
@@ -56,6 +57,11 @@ const index = ({new_releases,featured_playlists,focus_playlists}:IndexProps) => 
     },[])
   return (
     <div>
+      <Head>
+      <title>
+          Spotify Clone | Creative World Inc.
+        </title>
+        </Head>
       <main className="font-poppins">
         {/* left side */}
         <section>

@@ -9,6 +9,7 @@ import TrackCard from "../components/TrackCard"
 import { useUser } from "../context/UserProvider"
 import { useEffect, useState } from "react"
 import {useRouter} from "next/router"
+import Head from 'next/head'
 import { useTrack } from "../context/TrackContext"
 import { Playlist } from "../types/Playlist"
 import { Album } from "../types/Album"
@@ -51,6 +52,11 @@ const details = ({album,playlist}:DetailsProps) => {
     },[])
     return (
         <div>
+             <Head>
+      <title>
+          Spotify Clone | Creative World Inc.
+        </title>
+        </Head>
       {(user && user.token !== null)? (<main className="font-poppins">
         {/* left side */}
         <section>

@@ -1,10 +1,9 @@
 import logo from '../images/spotify.svg'
 import Image from 'next/image'
-import { GetServerSideProps } from 'next'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { useUser } from '../context/UserProvider'
-import Token from '../types/Token'
+import Head from 'next/head'
 const login = () => {
     const {requestToken,loading} = useUser()
     const router = useRouter()
@@ -19,6 +18,11 @@ const login = () => {
     },[])
     return (
         <div>
+             <Head>
+      <title>
+          Spotify Clone | Creative World Inc.
+        </title>
+        </Head>
             <main className="bg-[#1A1A1A] h-screen flex items-center justify-center">
             {loading ? <div className="text-white"><h1>Loading....</h1></div> :(
             <div className="flex flex-col space-y-2">
